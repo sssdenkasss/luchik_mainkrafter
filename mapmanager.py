@@ -1,5 +1,3 @@
-import math
-import pickle
 class Mapmanager:
     """Керування карткою"""
 
@@ -7,12 +5,11 @@ class Mapmanager:
         self.model = 'block'  # модель кубика лежить у файлі block.egg
         # використовуються такі текстури:
         self.textures = [
-            "textures/red.jpg",
-            "textures/orange.jpg",
-            "textures/pink.jpg",
-            "textures/purple.jpg",
-            "textures/blue.jpg",
-            "textures/white.jpg",
+            "textures/єндерняк.jpg",
+            "textures/обсидиан.jpg",
+            "textures/земля.jpg",
+            "textures/камень.png",
+            "textures/песок душ.jpg"
         ]
 
         self.colors = [
@@ -96,27 +93,42 @@ class Mapmanager:
             self.addBlock(new)
 
     def delBlock(self, position):
+        """видаляє блоки у зазначеній позиції """
         blocks = self.findBlocks(position)
         for block in blocks:
             block.removeNode()
 
     def delBlockFrom(self, position):
         x, y, z = self.findHighestEmpty(position)
-        pos = round(x), round(y), round(z) - 1
+        pos = x, y, z - 1
         for block in self.findBlocks(pos):
             block.removeNode()
+
     def saveMap(self):
+        """зберігає всі блоки, включаючи споруди, у бінарний файл"""
+        # повертає колекцію NodePath для всіх існуючих у карті світу блоків
         blocks = self.land.getChildren()
+        # відкриваємо бінарний файл на запис
         with open('my_map.dat', 'wb') as file:
+            # зберігаємо на початок файлу кількість блоків
             pickle.dump(len(blocks), file)
+            # обходимо всі блоки
             for block in blocks:
-                x,y,z = block.getPos()
+                # зберігаємо позицію
+                x, y, z = block.getPos()
                 pos = (int(x), int(y), int(z))
                 pickle.dump(pos, file)
+
     def loadMap(self):
+        # видаляємо всі блоки
         self.clear()
+        # відкриваємо бінарний файл на читання
         with open('my_map.dat', 'rb') as file:
+            # зчитуємо кількість блоків
             length = pickle.load(file)
             for i in range(length):
+                # зчитуємо позицію
                 pos = pickle.load(file)
+                # створюємо новий блок
                 self.addBlock(pos)
+

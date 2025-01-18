@@ -25,17 +25,16 @@ class Hero():
         - Налаштування управління."""
         self.land = land
         self.mode = True  # режим проходження крізь усе
-        self.hero = loader.loadModel('smiley')
+        self.hero = loader.loadModel('panda')
         self.hero.setColor(1, 0.3, 0.5)
         self.hero.setScale(0.3)
         self.hero.setPos(pos)
         self.hero.reparentTo(render)
+        self.hero.setScale(0.1, 0.1, 0.1)
         self.cameraBind()
         self.accept_events()
 
     def cameraBind(self):
-        """Прив'язка камери до героя:
-        - Камера слідує за героєм, з певною висотою."""
         base.disableMouse()
         base.camera.setH(180)
         base.camera.reparentTo(self.hero)
@@ -216,6 +215,6 @@ class Hero():
         base.accept(key_build, self.build)
         base.accept(key_destroy, self.destroy)
 
-        base.accept('k',self.land.saveMap)
-        base.accept('l', self.land.loadMap)
+        base.accept("k", self.land.saveMap)
+        base.accept("l", self.land.loadMap)
 
