@@ -9,7 +9,8 @@ class Mapmanager:
             "textures/обсидиан.jpg",
             "textures/земля.jpg",
             "textures/камень.png",
-            "textures/песок душ.jpg"
+            "textures/булижник.jpg",
+            "textures/завантаження.jpg"
         ]
 
         self.colors = [
